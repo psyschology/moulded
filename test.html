@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Project Activation - JetWeb Labs</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body { font-family: sans-serif; }
+        .invoice-box { max-width: 800px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, .15); font-size: 16px; line-height: 24px; color: #555; }
+        .invoice-box table { width: 100%; line-height: inherit; text-align: left; }
+        .invoice-box table td { padding: 5px; vertical-align: top; }
+        .invoice-box table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; }
+        .invoice-box table tr.item td { border-bottom: 1px solid #eee; }
+        .invoice-box table tr.total td:nth-child(2) { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="invoice-box" id="invoice-to-download">
+        <table>
+            <tr class="heading"><td>Description</td><td>Amount</td></tr>
+            <tr class="item"><td>Website & Social Media Package (First Month)</td><td>₹33,000.00</td></tr>
+            <tr class="item"><td>Special Launch Discount</td><td>-₹26,002.00</td></tr>
+            <tr class="total"><td>Total</td><td>₹6,998.00</td></tr>
+        </table>
+    </div>
+    <button onclick="downloadPDF()">Download PDF</button>
+
+    <script>
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('invoice-to-download');
+            const pdf = new jsPDF();
+
+            html2canvas(element).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = pdf.internal.pageSize.getWidth();
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save('invoice.pdf');
+            });
+        }
+    </script>
+</body>
+</html>
