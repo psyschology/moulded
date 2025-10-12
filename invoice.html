@@ -1,150 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - Project Activation - JetWeb Labs</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #EC4899;
-            --secondary-color: #8B5CF6;
-            --background-color: #F9FAFB;
-            --surface-color: #FFFFFF;
-            --text-color: #4B5563;
-            --heading-color: #1F2937;
-            --border-color: #E5E7EB;
-            --font-main: 'Inter', sans-serif;
-            --font-heading: 'Poppins', sans-serif;
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        body { font-family: var(--font-main); background-color: var(--background-color); color: var(--text-color); line-height: 1.6; padding: 20px; }
-        .invoice-box { max-width: 800px; margin: auto; padding: 30px; background: var(--surface-color); box-shadow: var(--shadow-lg); border-radius: 10px; }
-        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
-        .invoice-header .logo { height: 50px; }
-        .invoice-header .title { text-align: right; }
-        .invoice-header h1 { font-family: var(--font-heading); color: var(--heading-color); font-size: 2.5rem; margin: 0; }
-        .invoice-header p { margin: 2px 0; }
-        .invoice-details { display: flex; justify-content: space-between; margin-bottom: 40px; }
-        .invoice-details div h3 { font-family: var(--font-heading); font-size: 1rem; color: #9CA3AF; text-transform: uppercase; margin-bottom: 5px; }
-        .invoice-table { width: 100%; border-collapse: collapse; }
-        .invoice-table thead th { background-color: var(--background-color); text-align: left; padding: 12px; font-family: var(--font-heading); }
-        .invoice-table tbody td { padding: 12px; border-bottom: 1px solid var(--border-color); }
-        .invoice-table .item-description { color: var(--heading-color); font-weight: 500; }
-        .invoice-table .item-sub-description { font-size: 0.9rem; color: #6B7280; }
-        .invoice-totals { margin-top: 30px; text-align: right; }
-        .invoice-totals table { margin-left: auto; width: 60%; }
-        .invoice-totals td { padding: 8px; }
-        .invoice-totals .discount { color: #10B981; }
-        .invoice-totals .grand-total { font-size: 1.5rem; font-weight: 700; color: var(--heading-color); border-top: 2px solid var(--heading-color); border-bottom: 2px solid var(--heading-color); }
-        .payment-section { text-align: center; padding: 30px; margin-top: 30px; background-color: var(--background-color); border-radius: 8px; }
-        .payment-section p { margin-bottom: 20px; font-weight: 500; color: var(--heading-color); }
-        .btn-download { display: inline-block; background: transparent; color: var(--text-color); padding: 10px 20px; text-decoration: none; border: 1px solid var(--border-color); border-radius: 6px; margin-top: 20px; cursor: pointer; font-family: var(--font-main); font-size: 1rem; }
-        .btn-download:hover { background-color: var(--background-color); }
-        @media print {
-            body { background-color: white; padding: 0; }
-            .invoice-box { box-shadow: none; border: 1px solid var(--border-color); border-radius: 0; }
-            .action-buttons, .back-link { display: none; }
-        }
-        @media (max-width: 600px) {
-            .invoice-box { padding: 20px; }
-            .invoice-header, .invoice-details { flex-direction: column; }
-            .invoice-header .title { text-align: left; margin-top: 20px; }
-            .invoice-details div { margin-bottom: 20px; }
-            .invoice-totals table { width: 100%; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice - Project Activation - JetWeb Labs</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <style>
+    :root {
+      --primary-color: #1d4ed8;
+      --secondary-color: #3b82f6;
+      --background-color: #f9fafb;
+      --surface-color: #ffffff;
+      --text-color: #4b5563;
+      --heading-color: #111827;
+      --border-color: #e5e7eb;
+      --font-main: 'Inter', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .invoice-box {
+      position: relative;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      background: var(--surface-color);
+      box-shadow: var(--shadow-lg);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Watermark */
+    .invoice-box::before {
+      content: "JETWEB LABS";
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 5rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.05);
+      letter-spacing: 10px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .invoice-box > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .invoice-header .logo {
+      height: 60px;
+    }
+
+    .invoice-header .title {
+      text-align: right;
+    }
+
+    .invoice-header h1 {
+      font-family: var(--font-heading);
+      color: var(--heading-color);
+      font-size: 2.2rem;
+      margin: 0;
+    }
+
+    .invoice-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .invoice-details div h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .invoice-table thead th {
+      background-color: #f3f4f6;
+      text-align: left;
+      padding: 12px;
+      font-family: var(--font-heading);
+    }
+
+    .invoice-table tbody td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .item-description {
+      color: var(--heading-color);
+      font-weight: 600;
+    }
+
+    .item-sub-description {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .invoice-totals {
+      margin-top: 30px;
+      text-align: right;
+    }
+
+    .invoice-totals table {
+      margin-left: auto;
+      width: 60%;
+    }
+
+    .invoice-totals td {
+      padding: 8px;
+    }
+
+    .invoice-totals .grand-total {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--heading-color);
+      border-top: 2px solid var(--heading-color);
+      border-bottom: 2px solid var(--heading-color);
+    }
+
+    .payment-section {
+      text-align: center;
+      padding: 30px;
+      margin-top: 30px;
+      background-color: var(--background-color);
+      border-radius: 8px;
+    }
+
+    .signature-section {
+      margin-top: 50px;
+      text-align: right;
+      padding-right: 50px;
+    }
+
+    .signature-line {
+      font-family: "Poppins", cursive;
+      font-size: 1.2rem;
+      color: #1f2937;
+      border-top: 1px solid #9ca3af;
+      display: inline-block;
+      padding-top: 8px;
+    }
+
+    .signature-section small {
+      display: block;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .btn-download {
+      display: inline-block;
+      background: var(--primary-color);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      margin: 20px auto;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-download:hover {
+      background-color: var(--secondary-color);
+    }
+
+    @media print {
+      .btn-download,
+      .back-link {
+        display: none;
+      }
+      body {
+        background: #fff;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="invoice-to-download">
-        <div class="invoice-box">
-            <a href="index.html" class="back-link" style="text-decoration:none; color: var(--text-color); margin-bottom: 20px; display: inline-block;">&larr; Back to Plan</a>
-            <header class="invoice-header">
-                <img src="logo.png" alt="JetWeb Labs Logo" class="logo">
-                <div class="title">
-                    <h1>INVOICE</h1>
-                    <p>Invoice #: JWL-001</p>
-                    <p>Issued: October 12, 2025</p>
-                </div>
-            </header>
-            <div class="invoice-details">
-                <div>
-                    <h3>Bill To</h3>
-                    <p><strong>Karika Hirani</strong><br>Moulded Fantasy<br>Mumbai, Maharashtra</p>
-                </div>
-                <div>
-                    <h3>From</h3>
-                    <p><strong>JetWeb Labs</strong><br>Kolkata, West Bengal<br>support@jetweblabs.in</p>
-                </div>
-            </div>
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="item-description">Website & Social Media Package (First Month)</div>
-                            <p class="item-sub-description">Includes Dual-Track E-commerce Website & Social Media Management.</p>
-                        </td>
-                        <td>₹33,000.00</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="item-description" style="color: #10B981;">Special Launch Discount</div>
-                            <p class="item-sub-description">A special offer to kickstart our partnership.</p>
-                        </td>
-                        <td style="color: #10B981;">-₹26,002.00</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="invoice-totals">
-                <table>
-                    <tr>
-                        <td>Subtotal</td>
-                        <td>₹6,998.00</td>
-                    </tr>
-                    <tr>
-                        <td class="grand-total"><strong>Total Due</strong></td>
-                        <td class="grand-total"><strong>₹6,998.00</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Advance Due (50%)</strong></td>
-                        <td><strong>₹3,499.00</strong></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="payment-section">
-                <p>Click the button below to pay the <strong>₹3,499</strong> advance securely with Razorpay.</p>
-                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_RSdVqVWRs1jsbV" async> </script> </form>
-            </div>
+  <div id="invoice-to-download">
+    <div class="invoice-box">
+      <header class="invoice-header">
+        <img src="logo.png" alt="JetWeb Labs Logo" class="logo" />
+        <div class="title">
+          <h1>INVOICE</h1>
+          <p>Invoice #: JWL-001</p>
+          <p>Issued: October 12, 2025</p>
         </div>
-    </div>
-    <div class="action-buttons" style="text-align: center;">
-        <button onclick="downloadPDF()" class="btn-download"><i class="fas fa-download"></i> Download as PDF</button>
-    </div>
-    <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">This is a system-generated invoice and does not require a signature.</p>
+      </header>
 
-    <script>
-        function downloadPDF() {
-            const element = document.getElementById('invoice-to-download');
-            const opt = {
-                margin:       0.5,
-                filename:     'Invoice-JWL-001-MouldedFantasy.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
-        }
-    </script>
+      <div class="invoice-details">
+        <div>
+          <h3>Bill To</h3>
+          <p><strong>Karika Hirani</strong><br />Moulded Fantasy<br />Mumbai, Maharashtra</p>
+        </div>
+        <div>
+          <h3>From</h3>
+          <p><strong>JetWeb Labs</strong><br />Kolkata, West Bengal<br />support@jetweblabs.in</p>
+        </div>
+      </div>
+
+      <table class="invoice-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="item-description">Website & Social Media Package (First Month)</div>
+              <p class="item-sub-description">Includes Dual-Track E-commerce Website & Social Media Management.</p>
+            </td>
+            <td>₹33,000.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-description" style="color: #10b981">Special Launch Discount</div>
+              <p class="item-sub-description">A special offer to kickstart our partnership.</p>
+            </td>
+            <td style="color: #10b981">-₹26,002.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="invoice-totals">
+        <table>
+          <tr>
+            <td>Subtotal</td>
+            <td>₹6,998.00</td>
+          </tr>
+          <tr>
+            <td class="grand-total"><strong>Total Due</strong></td>
+            <td class="grand-total"><strong>₹6,998.00</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Advance Due (50%)</strong></td>
+            <td><strong>₹3,499.00</strong></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="payment-section">
+        <p>Click below to pay <strong>₹3,499</strong> securely via Razorpay.</p>
+        <form>
+          <script
+            src="https://checkout.razorpay.com/v1/payment-button.js"
+            data-payment_button_id="pl_RSdVqVWRs1jsbV"
+            async
+          ></script>
+        </form>
+      </div>
+
+      <div class="signature-section">
+        <span class="signature-line">Jay Basotia</span>
+        <small>Authorized Signatory, JetWeb Labs</small>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center">
+    <button onclick="downloadPDF()" class="btn-download">
+      <i class="fas fa-download"></i> Download Invoice PDF
+    </button>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      const element = document.querySelector('.invoice-box');
+      const opt = {
+        margin: 0.4,
+        filename: 'Invoice-JWL-001-MouldedFantasy.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
 </body>
 </html>
 
