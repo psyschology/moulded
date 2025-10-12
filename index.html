@@ -82,8 +82,8 @@
         .price-card .value { text-decoration: line-through; opacity: 0.7; font-size: 1rem; }
         .annual-deal { background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; margin-top: 20px; font-weight: 600; }
         
-        .btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; font-size: 0.9rem; padding: 8px 20px; margin-top: 15px; text-decoration: none; display: inline-block; border-radius: 8px; transition: all 0.3s ease; }
-        .btn-secondary:hover { background-color: white; color: var(--secondary-color); }
+        .btn { display: inline-block; background-color: #ffffff; color: var(--secondary-color); padding: 15px 35px; border-radius: 8px; text-decoration: none; font-weight: 700; font-family: var(--font-heading); transition: all 0.3s ease; margin-top: 20px; font-size: 1.1rem; border: none; cursor: pointer;}
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         
         .footer { text-align: center; padding: 30px; margin-top: 30px; font-size: 0.9rem; }
 
@@ -152,13 +152,13 @@
                     <h3>WEBSITE</h3>
                     <div class="value"><s>Market Price: ₹25,000</s></div>
                     <div class="price">₹4,999</div>
-                    <div class="price-sub">One-Time + GST</div>
+                    <div class="price-sub">One-Time Payment</div>
                 </div>
                  <div class="price-card">
                     <h3>SOCIAL MEDIA</h3>
                     <div class="value"><s>Market Price: ₹8,000/mo</s></div>
                     <div class="price">₹1,999</div>
-                    <div class="price-sub">Per Month + GST</div>
+                    <div class="price-sub">Per Month</div>
                     <div class="annual-deal">
                         <i class="fas fa-star"></i> Annual Deal: Pay for 10 Months, Get 2 FREE!
                     </div>
@@ -169,13 +169,9 @@
 
         <section class="section price-card" id="next-steps">
             <h3>Ready to Get Started?</h3>
-            <p>The total for your first month is just ₹6,998 + GST. To begin, we ask for a 50% advance.</p>
-            <div class="price">₹3,499 <span style="font-size: 1.5rem;">+ GST</span></div>
-            
-<form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_RSdNnyPkY5wpxP" async> </script> </form>
-            <br>
-            <a href="https://www.instagram.com/jetweblabs/" target="_blank" class="btn-secondary">Have a Question? Chat on Instagram</a>
-            <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.8;">Once you pay, we'll schedule a quick call to begin right away!</p>
+            <p>The total for your first month is just ₹6,998. To begin, we ask for a 50% advance.</p>
+            <div class="price">₹3,499</div>
+            <a href="invoice.html" class="btn">View Your Invoice & Get Started</a>
         </section>
 
         <footer class="footer">
