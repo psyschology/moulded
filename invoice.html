@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* Light Theme (Default) */
         :root {
             --primary-color: #EC4899;
             --secondary-color: #8B5CF6;
@@ -24,7 +23,6 @@
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* Dark Theme Variables */
         body[data-theme="dark"] {
             --background-color: #111827;
             --surface-color: #1F2937;
@@ -50,12 +48,11 @@
             background: var(--surface-color); 
             box-shadow: var(--shadow-lg); 
             border-radius: 10px;
-            position: relative; /* Needed for watermark positioning */
-            overflow: hidden; /* Ensures watermark doesn't spill out */
+            position: relative;
+            overflow: hidden;
             transition: background-color 0.3s;
         }
 
-        /* --- WATERMARK --- */
         .invoice-box::after {
             content: "JetWeb Labs";
             font-size: 6rem;
@@ -72,11 +69,15 @@
             font-family: var(--font-heading);
         }
         
+        /* --- NEW CSS RULE TO HIDE WATERMARK FOR PDF --- */
+        .hide-watermark-for-pdf::after {
+            display: none !important;
+        }
+
         .invoice-box > * {
             position: relative;
             z-index: 2;
         }
-        /* --- END WATERMARK --- */
 
         .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
         .invoice-header .logo { height: 50px; }
@@ -90,7 +91,7 @@
         .invoice-table tbody td { padding: 12px; border-bottom: 1px solid var(--border-color); }
         .invoice-table .item-description { color: var(--heading-color); font-weight: 500; }
         .invoice-table .item-sub-description { font-size: 0.9rem; color: #6B7280; }
-        body[data-theme="dark"] .invoice-table .item-sub-description { color: #9CA3AF; } /* Specific dark mode adjustment */
+        body[data-theme="dark"] .invoice-table .item-sub-description { color: #9CA3AF; }
 
         .invoice-totals { margin-top: 30px; text-align: right; }
         .invoice-totals table { margin-left: auto; width: 60%; }
@@ -194,23 +195,30 @@
     <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">This is a system-generated invoice and does not require a signature.</p>
 
     <script>
+        // --- UPDATED JAVASCRIPT FUNCTION TO FIX DOWNLOAD ---
         function downloadPDF() {
             const element = document.getElementById('invoice-to-download');
-            
-            // --- PDF DOWNLOAD FIX ---
-            // Added pagebreak option to prevent splitting into multiple pages
+            const invoiceBox = element.querySelector('.invoice-box');
+
+            // 1. Add class to hide watermark before PDF generation
+            invoiceBox.classList.add('hide-watermark-for-pdf');
+
             const opt = {
                 margin:       0.5,
                 filename:     'Invoice-JWL-001-MouldedFantasy.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
-                pagebreak:    { mode: 'avoid-all' } // This is the key to prevent page breaks
+                pagebreak:    { mode: 'avoid-all' }
             };
-            html2pdf().set(opt).from(element).save();
+
+            // 2. Generate and save the PDF
+            html2pdf().set(opt).from(element).save().finally(() => {
+                // 3. Remove the class after PDF is saved, so watermark reappears on screen
+                invoiceBox.classList.remove('hide-watermark-for-pdf');
+            });
         }
 
-        // --- DARK/LIGHT MODE SCRIPT ---
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
