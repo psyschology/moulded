@@ -52,7 +52,6 @@
             box-shadow: var(--shadow-lg); 
             border-radius: 10px;
             position: relative;
-            /* overflow: hidden; <- This was a major cause of issues */
             transition: background-color 0.3s;
         }
 
@@ -72,7 +71,6 @@
             font-family: var(--font-heading);
         }
         
-        /* Utility class to hide watermark during PDF generation */
         .hide-watermark-for-pdf::after {
             display: none !important;
         }
@@ -86,8 +84,20 @@
         .invoice-header .title { text-align: right; }
         .invoice-header h1 { font-family: var(--font-heading); color: var(--heading-color); font-size: 2.5rem; margin: 0; }
         .invoice-header p { margin: 2px 0; }
-        .invoice-details { display: flex; justify-content: space-between; margin-bottom: 40px; }
-        .invoice-details div h3 { font-family: var(--font-heading); font-size: 1rem; color: #9CA3AF; text-transform: uppercase; margin-bottom: 5px; }
+        
+        /* STYLING FOR THE NEW TABLE-BASED LAYOUT */
+        .invoice-details-table h3 {
+             font-family: var(--font-heading);
+             font-size: 1rem;
+             color: #9CA3AF;
+             text-transform: uppercase;
+             margin-top: 0;
+             margin-bottom: 5px;
+        }
+        .invoice-details-table p {
+            margin: 0;
+        }
+
         .invoice-table { width: 100%; border-collapse: collapse; }
         .invoice-table thead th { background-color: var(--background-color); text-align: left; padding: 12px; font-family: var(--font-heading); }
         .invoice-table tbody td { padding: 12px; border-bottom: 1px solid var(--border-color); }
@@ -118,16 +128,21 @@
                     <p>Issued: October 12, 2025</p>
                 </div>
             </header>
-            <div class="invoice-details">
-                <div>
-                    <h3>Bill To</h3>
-                    <p><strong>Karika Hirani</strong><br>Moulded Fantasy<br>Mumbai, Maharashtra</p>
-                </div>
-                <div>
-                    <h3>From</h3>
-                    <p><strong>JetWeb Labs</strong><br>Kolkata, West Bengal<br>support@jetweblabs.in</p>
-                </div>
-            </div>
+
+            <table class="invoice-details-table" style="width: 100%; margin-bottom: 40px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            <h3>Bill To</h3>
+                            <p><strong>Karika Hirani</strong><br>Moulded Fantasy<br>Mumbai, Maharashtra</p>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            <h3>From</h3>
+                            <p><strong>JetWeb Labs</strong><br>Kolkata, West Bengal<br>support@jetweblabs.in</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <table class="invoice-table">
                 <thead>
                     <tr>
@@ -181,9 +196,8 @@
     <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">This is a system-generated invoice and does not require a signature.</p>
 
     <script>
-        // --- FINAL, WORKING PDF DOWNLOAD FUNCTION ---
+        // Final, working PDF download function
         async function downloadPDF() {
-            // Select elements to manipulate
             const elementToPrint = document.getElementById('invoice-to-download');
             const invoiceBox = elementToPrint.querySelector('.invoice-box');
             const razorpayForm = document.getElementById('razorpay-form');
@@ -196,31 +210,18 @@
             invoiceBox.classList.add('hide-watermark-for-pdf');
 
             try {
-                // Use html2canvas to create an image of the invoice
-                const canvas = await html2canvas(elementToPrint, {
-                    scale: 2, // For higher resolution
-                    useCORS: true
-                });
-
-                // Use jsPDF to create a PDF from the image
+                const canvas = await html2canvas(elementToPrint, { scale: 2, useCORS: true });
                 const imgData = canvas.toDataURL('image/jpeg', 0.95);
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'in',
-                    format: 'letter'
-                });
-                
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: 'letter' });
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
                 pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
                 pdf.save('Invoice-JWL-001-MouldedFantasy.pdf');
-
             } catch (error) {
                 console.error('Error during PDF generation:', error);
             } finally {
-                // IMPORTANT: Restore the elements after capture
+                // Restore the elements after capture
                 if (razorpayForm && formParent) {
                     formParent.appendChild(razorpayForm);
                 }
@@ -228,7 +229,7 @@
             }
         }
 
-        // --- Theme Toggle Logic (unchanged) ---
+        // Theme Toggle Logic
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
         themeToggle.addEventListener('click', () => {
