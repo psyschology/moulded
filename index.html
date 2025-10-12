@@ -3,117 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Growth Blueprint for Moulded Fantasy by Jetweb Labs</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Your Website & Social Media Plan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #030712; color: #f9fafb; }
-        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
-        .playfair { font-family: 'Playfair Display', serif; }
-        .feature-item { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2322c55e'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd' /%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 0.25rem; background-size: 1.25rem; padding-left: 1.75rem; }
+        :root {
+            --primary-color: #EC4899; /* Vibrant Pink */
+            --secondary-color: #8B5CF6; /* Rich Purple */
+            --background-color: #F9FAFB;
+            --surface-color: #FFFFFF;
+            --text-color: #4B5563;
+            --heading-color: #1F2937;
+            --border-color: #E5E7EB;
+            --success-color: #10B981;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        * { scroll-behavior: smooth; margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); background-color: var(--background-color); color: var(--text-color); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+        .navbar a {
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .navbar a:hover, .navbar a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .header { text-align: center; padding: 60px 20px 40px; }
+        .header h1 { font-family: var(--font-heading); color: var(--heading-color); font-size: 2.8rem; line-height: 1.2; }
+        .header p { font-size: 1.1rem; color: var(--text-color); margin-top: 10px; }
+        .section { background-color: var(--surface-color); border-radius: 12px; padding: 30px; margin-top: 30px; box-shadow: var(--shadow-md); }
+        .section h2 { font-family: var(--font-heading); font-size: 1.75rem; color: var(--heading-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        .solution-card { background-color: var(--background-color); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .solution-card .icon { font-size: 2rem; margin-bottom: 10px; color: var(--primary-color); }
+        .solution-card h3 { font-family: var(--font-heading); color: var(--heading-color); }
+        .solution-card p { font-size: 0.9rem; }
+
+        .feature-list { list-style: none; padding: 0; margin-top: 20px; }
+        .feature-list li { display: flex; align-items: flex-start; margin-bottom: 15px; }
+        .feature-list .icon { color: var(--success-color); margin-right: 12px; font-size: 1.2rem; margin-top: 4px; }
+        .feature-list p { font-size: 0.9rem; margin: 0; color: #6B7280; line-height: 1.5; }
+        .feature-list strong { color: var(--heading-color); }
+
+        .price-card { background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); color: white; padding: 30px; border-radius: 12px; text-align: center; box-shadow: var(--shadow-lg); }
+        .price-card h3 { font-family: var(--font-heading); opacity: 0.9; }
+        .price-card .price { font-size: 3.5rem; font-weight: 700; margin: 5px 0; font-family: var(--font-heading); }
+        .price-card .price-sub { opacity: 0.8; }
+        .price-card .value { text-decoration: line-through; opacity: 0.7; font-size: 1rem; }
+        .annual-deal { background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; margin-top: 20px; font-weight: 600; }
+        
+        .btn { display: inline-block; background-color: #ffffff; color: var(--secondary-color); padding: 15px 35px; border-radius: 8px; text-decoration: none; font-weight: 700; font-family: var(--font-heading); transition: all 0.3s ease; margin-top: 20px; font-size: 1.1rem; border: none; cursor: pointer;}
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: white; font-size: 0.9rem; padding: 8px 20px; margin-top: 15px; }
+        .btn-secondary:hover { background-color: white; color: var(--secondary-color); }
+        
+        .footer { text-align: center; padding: 30px; margin-top: 30px; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .navbar { flex-wrap: wrap; justify-content: space-around; padding: 10px 5px; }
+            .navbar a { padding: 6px 8px; font-size: 0.8rem; }
+            .header h1 { font-size: 2.2rem; }
+            .solution-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
-<body class="antialiased">
-
-    <div class="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        
-        <header class="text-center mb-16">
-            <h1 class="playfair text-4xl md:text-5xl font-bold">A Growth Blueprint for <br><span class="text-pink-400">Moulded Fantasy</span></h1>
-            <p class="mt-4 text-lg text-gray-400">Prepared by the experts at Jetweb Labs.</p>
+<body>
+    <nav class="navbar" id="navbar">
+        <a href="#solution">What You Get</a>
+        <a href="#investment">Your Offer</a>
+        <a href="#next-steps">Get Started</a>
+    </nav>
+    <div class="container">
+        <header class="header">
+            <h1>Your New Website & Social Media Plan</h1>
+            <p>A simple plan to help you sell more cakes and save time.</p>
         </header>
 
-        <section class="mb-12">
-            <div class="bg-gray-800 border border-gray-700 p-8 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4">Hi Karika, your work is exceptional.</h2>
-                <p class="text-gray-300">We were looking through your profile and the marbled gold detailing on your "SIXTY" cake is absolutely world-class. Your artistry is clear. You told us your goal is to **"reach out to more local customers,"** which is our exact specialty.</p>
-                <p class="text-gray-300 mt-4">Our mission is to give you a digital presence that matches the quality of your cakes. We've designed three packages to solve your DM chaos, establish you as a premium brand, and make you the #1 result when people search for "eggless cakes in Mumbai."</p>
-            </div>
-        </section>
-
-        <section class="mb-16">
-             <h2 class="text-3xl font-bold text-center mb-8">Why Trust Jetweb Labs?</h2>
-             <div class="bg-gray-800 border border-gray-700 p-8 rounded-lg">
-                 <div class="text-center">
-                    <h3 class="text-xl font-semibold">You're partnering with a founder who has built software for the world's top tech companies.</h3>
-                    <p class="text-gray-400 mt-2 text-sm">Our CEO, Jay, brings the rigor, security, and standards of Big Tech to your project. This is our guarantee of quality.</p>
-                    <div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 mt-6 text-2xl font-bold text-gray-400">
-                        <span>Amazon</span>
-                        <span>Rippling</span>
-                        <span>Revolut</span>
-                        <span>OYO</span>
-                    </div>
-                 </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="text-3xl font-bold text-center mb-10">Your Custom-Curated Packages</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                
-                <!-- Plan 1: JetLite -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 flex flex-col">
-                    <h3 class="text-2xl font-bold">The Order Streamliner</h3>
-                    <p class="text-pink-400 font-semibold">(JetLite Package)</p>
-                    <p class="mt-6 text-4xl font-extrabold">₹4,999 <span class="text-base font-medium text-gray-400">+ GST</span></p>
-                    <p class="mt-4 text-gray-300 flex-grow">The immediate solution to organize your orders. A beautiful, single-page "digital menu" that moves conversations out of your DMs and looks incredibly professional.</p>
-                    <ul class="mt-6 space-y-4 text-gray-300">
-                        <li class="feature-item">1-Page Custom Order Page</li>
-                        <li class="feature-item">Showcase Your Top 10 Cakes</li>
-                        <li class="feature-item">"Order on WhatsApp" Button</li>
-                        <li class="feature-item">2-Day Superfast Delivery</li>
-                    </ul>
-                    <a href="https://ig.me/m/jetweblabs" target="_blank" class="mt-8 block w-full bg-gray-600 hover:bg-gray-700 text-white text-center font-semibold py-3 rounded-lg">Choose This Plan</a>
+        <section class="section" id="solution">
+            <h2>What We'll Build For You</h2>
+            <p>We will create a smart, professional website that helps you sell more cakes. It will automate the simple orders so you can focus on your amazing custom creations.</p>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="icon"><i class="fas fa-store"></i></div>
+                    <h3>1. The Instant-Buy Shop</h3>
+                    <p>For your popular cakes with set prices. Customers can easily select, pay 100% upfront, and order in minutes. No more DMs for simple orders.</p>
                 </div>
-
-                <!-- Plan 2: JetLaunch -->
-                <div class="bg-gray-800 p-8 rounded-2xl border-2 border-pink-500 flex flex-col relative">
-                    <p class="absolute top-0 -translate-y-1/2 bg-pink-500 text-white text-xs font-semibold px-3 py-1 rounded-full">First Client Deal</p>
-                    <h3 class="text-2xl font-bold">The Local Dominator</h3>
-                    <p class="text-pink-400 font-semibold">(JetLaunch Package)</p>
-                    <div class="my-6">
-                        <p class="text-xl text-gray-500 line-through">Regular: ₹19,999</p>
-                        <p class="text-5xl font-extrabold text-white">₹14,999 <span class="text-base font-medium text-gray-400">+ GST</span></p>
-                    </div>
-                    <p class="mt-4 text-gray-300 flex-grow">Our complete solution to make you the #1 baker in your area. This includes the Order Page and adds a full website with Local SEO to attract new customers from Google.</p>
-                    <ul class="mt-6 space-y-4 text-gray-300">
-                        <li class="feature-item"><strong>Everything in Streamliner, plus:</strong></li>
-                        <li class="feature-item">Full 5-Page Website (Gallery, About)</li>
-                        <li class="feature-item"><strong>Local SEO Optimization</strong> (Rank on Google for "eggless cakes in Mumbai")</li>
-                        <li class="feature-item">Professional Photo Gallery</li>
-                        <li class="feature-item">1 Month of Full Technical Support</li>
-                    </ul>
-                    <a href="https://ig.me/m/jetweblabs" target="_blank" class="mt-8 block w-full bg-pink-500 hover:bg-pink-600 text-white text-center font-semibold py-3 rounded-lg">Claim My Founder's Deal</a>
-                </div>
-
-                <!-- Plan 3: JetScale -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 flex flex-col">
-                    <h3 class="text-2xl font-bold">The E-commerce Engine</h3>
-                    <p class="text-pink-400 font-semibold">(JetScale Package)</p>
-                    <p class="mt-6 text-4xl font-extrabold">₹49,999 <span class="text-base font-medium text-gray-400">+ GST</span></p>
-                    <p class="mt-4 text-gray-300 flex-grow">The ultimate upgrade to automate your sales. This package adds a full online store where customers can place and pay for orders directly on your website, 24/7.</p>
-                     <ul class="mt-6 space-y-4 text-gray-300">
-                        <li class="feature-item"><strong>Everything in Local Dominator, plus:</strong></li>
-                        <li class="feature-item">Full E-commerce Store</li>
-                        <li class="feature-item">Online Payment Gateway</li>
-                        <li class="feature-item">Automated Order Management</li>
-                        <li class="feature-item">3 Months of Full Technical Support</li>
-                    </ul>
-                    <a href="https://ig.me/m/jetweblabs" target="_blank" class="mt-8 block w-full bg-gray-600 hover:bg-gray-700 text-white text-center font-semibold py-3 rounded-lg">Choose This Plan</a>
+                <div class="solution-card">
+                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>2. The Custom Cake Studio</h3>
+                    <p>A special form for custom orders. A customer pays a small booking fee to show they're serious. Then you can discuss the unique details on WhatsApp.</p>
                 </div>
             </div>
+
+            <h3 style="margin-top: 30px; font-family: var(--font-heading);">Everything Included in Your Website:</h3>
+            <ul class="feature-list">
+                <li><span class="icon"><i class="fas fa-edit"></i></span><div><strong>Your Personal Admin Panel</strong><p>Easily add or edit cakes, photos, and prices anytime you want. No technical help needed.</p></div></li>
+                <li><span class="icon"><i class="fas fa-images"></i></span><div><strong>Beautiful Photo & Video Gallery</strong><p>A stunning, fast-loading gallery to showcase your best work and attract customers.</p></div></li>
+                <li><span class="icon"><i class="fab fa-instagram"></i></span><div><strong>Live Instagram Feed</strong><p>Your latest Instagram posts will appear on your site automatically, keeping it fresh.</p></div></li>
+                <li><span class="icon"><i class="fas fa-mobile-alt"></i></span><div><strong>Perfect on All Phones & Computers</strong><p>Your site will look amazing and be easy to use on any device.</p></div></li>
+                <li><span class="icon"><i class="fas fa-shield-alt"></i></span><div><strong>Free SSL Security Certificate</strong><p>The padlock icon that builds trust and keeps your customer's data safe.</p></div></li>
+                 <li><span class="icon"><i class="fas fa-search-dollar"></i></span><div><strong>Google-Ready (SEO Foundation)</strong><p>Built from the start to help you get found by new customers searching on Google in Mumbai.</p></div></li>
+            </ul>
         </section>
         
-        <section class="mt-16 text-center">
-            <h2 class="text-3xl font-bold">Ready to take the next step?</h2>
-            <p class="mt-4 text-lg text-gray-400">Let's discuss which plan is the perfect fit for your growth. We're ready when you are.</p>
-            <a href="https://ig.me/m/jetweblabs" target="_blank" class="mt-8 inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-lg">
-                Start the Conversation
-            </a>
+        <section class="section" id="social">
+            <h2>Social Media, Made Easy</h2>
+            <p>This service saves you time and keeps your Instagram looking professional and active, so you can focus on baking.</p>
+             <ul class="feature-list">
+                <li><span class="icon"><i class="fas fa-calendar-alt"></i></span><div><strong>4 Professional Posts Per Week</strong><p>We'll post four times every week to keep your brand active and engaging.</p></div></li>
+                <li><span class="icon"><i class="fas fa-magic"></i></span><div><strong>We Handle the Creative Work</strong><p>You provide the cake photos. We do all the professional editing, write great captions, and find the best hashtags.</p></div></li>
+            </ul>
         </section>
 
-    </div>
+        <section class="section" id="investment">
+            <h2>Your Special Launch Offer</h2>
+            <p>We are excited to partner with you. Here is a special price to help you get started and grow your brand.</p>
+            
+            <div class="solution-grid" style="align-items: center;">
+                <div class="price-card">
+                    <h3>WEBSITE</h3>
+                    <div class="value"><s>Market Price: ₹25,000</s></div>
+                    <div class="price">₹4,999</div>
+                    <div class="price-sub">One-Time + GST</div>
+                </div>
+                 <div class="price-card">
+                    <h3>SOCIAL MEDIA</h3>
+                    <div class="value"><s>Market Price: ₹8,000/mo</s></div>
+                    <div class="price">₹1,999</div>
+                    <div class="price-sub">Per Month + GST</div>
+                    <div class="annual-deal">
+                        <i class="fas fa-star"></i> Annual Deal: Pay for 10 Months, Get 2 FREE!
+                    </div>
+                </div>
+            </div>
+             <p style="text-align:center; margin-top: 20px; font-weight: 500;"><strong>Remember:</strong> 1 Year of a .com Domain & Secure Hosting is included for free with the website!</p>
+        </section>
 
+        <section class="section price-card" id="next-steps">
+            <h3>Ready to Get Started?</h3>
+            <p>The total for your first month is just ₹6,998 + GST. To begin, we ask for a 50% advance.</p>
+            <div class="price">₹3,499 <span style="font-size: 1.5rem;">+ GST</span></div>
+            <a href="https://rzp.io/l/x9kwkNhk" class="btn">Click Here to Start Now</a>
+            <br>
+            <a href="https://www.instagram.com/jetweblabs/" target="_blank" class="btn-secondary">Have a Question? Chat on Instagram</a>
+            <p style="font-size: 0.9rem; margin-top: 15px; opacity: 0.8;">Once you pay, we'll schedule a quick call to begin right away!</p>
+        </section>
+
+        <footer class="footer">
+            <p>We are excited to help you grow Moulded Fantasy.</p>
+            <p>JetWeb Labs &copy; 2025</p>
+        </footer>
+    </div>
+    <script>
+        // Simple scroll spy for navbar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.navbar a');
+        window.onscroll = () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').substring(1) === current) {
+                    a.classList.add('active');
+                }
+            });
+        };
+    </script>
 </body>
 </html>
+
