@@ -49,7 +49,7 @@
             box-shadow: var(--shadow-lg); 
             border-radius: 10px;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* This is a problem for html2pdf */
             transition: background-color 0.3s;
         }
 
@@ -69,15 +69,21 @@
             font-family: var(--font-heading);
         }
         
+        /* Utility class to hide watermark during PDF generation */
         .hide-watermark-for-pdf::after {
             display: none !important;
+        }
+
+        /* NEW UTILITY CLASS TO FIX RENDERING BUGS */
+        .pdf-generation-fix {
+            overflow: visible !important;
+            box-shadow: none !important;
         }
 
         .invoice-box > * {
             position: relative;
             z-index: 2;
         }
-
         .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
         .invoice-header .logo { height: 50px; }
         .invoice-header .title { text-align: right; }
@@ -91,7 +97,6 @@
         .invoice-table .item-description { color: var(--heading-color); font-weight: 500; }
         .invoice-table .item-sub-description { font-size: 0.9rem; color: #6B7280; }
         body[data-theme="dark"] .invoice-table .item-sub-description { color: #9CA3AF; }
-
         .invoice-totals { margin-top: 30px; text-align: right; }
         .invoice-totals table { margin-left: auto; width: 60%; }
         .invoice-totals td { padding: 8px; }
@@ -99,24 +104,9 @@
         .invoice-totals .grand-total { font-size: 1.5rem; font-weight: 700; color: var(--heading-color); border-top: 2px solid var(--heading-color); border-bottom: 2px solid var(--heading-color); }
         .payment-section { text-align: center; padding: 30px; margin-top: 30px; background-color: var(--background-color); border-radius: 8px; }
         .payment-section p { margin-bottom: 20px; font-weight: 500; color: var(--heading-color); }
-        
         .action-buttons { text-align: center; }
         .btn-download { display: inline-block; background: transparent; color: var(--text-color); padding: 10px 20px; text-decoration: none; border: 1px solid var(--border-color); border-radius: 6px; margin-top: 20px; cursor: pointer; font-family: var(--font-main); font-size: 1rem; transition: background-color 0.3s; margin-left: 10px; margin-right: 10px; }
         .btn-download:hover { background-color: var(--surface-color); }
-        
-        @media print {
-            body { background-color: white; padding: 0; }
-            .invoice-box { box-shadow: none; border: 1px solid #ddd; border-radius: 0; }
-            .invoice-box::after { opacity: 0.1; }
-            .action-buttons, .back-link { display: none; }
-        }
-        @media (max-width: 600px) {
-            .invoice-box { padding: 20px; }
-            .invoice-header, .invoice-details { flex-direction: column; }
-            .invoice-header .title { text-align: left; margin-top: 20px; }
-            .invoice-details div { margin-bottom: 20px; }
-            .invoice-totals table { width: 100%; }
-        }
     </style>
 </head>
 <body>
@@ -194,36 +184,56 @@
     <p style="text-align: center; font-size: 0.8rem; margin-top: 20px;">This is a system-generated invoice and does not require a signature.</p>
 
     <script>
-        // --- CHANGE 2: FULLY REVISED JAVASCRIPT FUNCTION TO FIX DOWNLOAD ---
-        function downloadPDF() {
-            // --- Select the elements that cause issues ---
+        // --- COMPLETELY REBUILT FUNCTION FOR MAXIMUM RELIABILITY ---
+        async function downloadPDF() {
+            console.log('Starting PDF generation...');
+
+            // 1. Wait for all fonts on the page to be loaded and ready.
+            try {
+                await document.fonts.ready;
+                console.log('Fonts loaded.');
+            } catch (err) {
+                console.error('Font loading error:', err);
+            }
+
+            // 2. Select all elements that need to be manipulated.
             const elementToPrint = document.getElementById('invoice-to-download');
-            const watermarkBox = elementToPrint.querySelector('.invoice-box');
+            const invoiceBox = elementToPrint.querySelector('.invoice-box');
             const razorpayForm = document.getElementById('razorpay-form');
-            const formParent = razorpayForm.parentElement; // Store parent to re-attach later
+            const formParent = razorpayForm ? razorpayForm.parentElement : null;
 
-            // --- 1. Temporarily hide/remove problematic elements BEFORE printing ---
-            watermarkBox.classList.add('hide-watermark-for-pdf'); // Hide watermark
-            formParent.removeChild(razorpayForm); // Remove the razorpay form
+            // 3. Prepare the DOM for a clean capture.
+            // Temporarily remove/hide anything that can interfere with rendering.
+            if (razorpayForm && formParent) {
+                formParent.removeChild(razorpayForm);
+            }
+            invoiceBox.classList.add('hide-watermark-for-pdf');
+            invoiceBox.classList.add('pdf-generation-fix'); // IMPORTANT NEW FIX
 
-            // --- 2. Define PDF options ---
+            // 4. Configure the PDF generator with stable settings.
             const options = {
                 margin:       0.5,
                 filename:     'Invoice-JWL-001-MouldedFantasy.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
-                pagebreak:    { mode: 'avoid-all' }
+                image:        { type: 'jpeg', quality: 0.95 }, // Slightly optimized quality
+                html2canvas:  { scale: 2, letterRendering: true, useCORS: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
 
-            // --- 3. Generate and save the PDF, then restore the elements ---
-            html2pdf().set(options).from(elementToPrint).save().finally(() => {
-                // This block runs AFTER the PDF is saved, ensuring elements are restored.
-                watermarkBox.classList.remove('hide-watermark-for-pdf'); // Restore watermark visibility
-                formParent.appendChild(razorpayForm); // Add the razorpay form back to the page
+            // 5. Generate the PDF and use .finally() to guarantee restoration.
+            await html2pdf().set(options).from(elementToPrint).save().finally(() => {
+                console.log('Restoring original page content.');
+                // This code runs whether the PDF succeeds or fails, ensuring the live page is not broken.
+                if (razorpayForm && formParent) {
+                    formParent.appendChild(razorpayForm);
+                }
+                invoiceBox.classList.remove('hide-watermark-for-pdf');
+                invoiceBox.classList.remove('pdf-generation-fix');
             });
+
+            console.log('PDF generation complete.');
         }
 
+        // --- Theme Toggle Logic (unchanged) ---
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
