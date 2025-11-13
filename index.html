@@ -413,12 +413,12 @@
     <script>
         // --- Data & State ---
         const products = [
-            { id: 1, name: "Signature Truffle Cake", price: 1200, category: "cake", img: "https://placehold.co/300x300/3e2723/ffffff?text=Truffle+Cake" },
-            { id: 2, name: "Fudgy Walnut Brownies", price: 650, category: "brownie", img: "https://placehold.co/300x300/5d4037/ffffff?text=Walnut+Brownies" },
-            { id: 3, name: "Blueberry Cheesecake", price: 1500, category: "cake", img: "https://placehold.co/300x300/4a148c/ffffff?text=Blueberry+Cake" },
-            { id: 4, name: "Lemon Loaf (Tea Cake)", price: 450, category: "teacake", img: "https://placehold.co/300x300/fbc02d/ffffff?text=Lemon+Loaf" },
-            { id: 5, name: "Assorted Cupcakes (6)", price: 550, category: "cake", img: "https://placehold.co/300x300/e91e63/ffffff?text=Cupcakes" },
-            { id: 6, name: "Sea Salt Cookies", price: 350, category: "cookie", img: "https://placehold.co/300x300/d7ccc8/000000?text=Cookies" }
+            { id: 1, name: "Signature Truffle Cake", price: 1200, category: "cake", img: "https://source.unsplash.com/300x300/?chocolate,truffle,cake" },
+            { id: 2, name: "Fudgy Walnut Brownies", price: 650, category: "brownie", img: "https://source.unsplash.com/300x300/?walnut,brownies" },
+            { id: 3, name: "Blueberry Cheesecake", price: 1500, category: "cake", img: "https://source.unsplash.com/300x300/?blueberry,cheesecake" },
+            { id: 4, name: "Lemon Loaf (Tea Cake)", price: 450, category: "teacake", img: "https://source.unsplash.com/300x300/?lemon,loaf,cake" },
+            { id: 5, name: "Assorted Cupcakes (6)", price: 550, category: "cake", img: "https://source.unsplash.com/300x300/?assorted,cupcakes" },
+            { id: 6, name: "Sea Salt Cookies", price: 350, category: "cookie", img: "https://source.unsplash.com/300x300/?sea,salt,cookies" }
         ];
 
         const state = {
@@ -523,6 +523,7 @@
                     </div>
                     
                     <div id="menu-grid" class="p-8 max-w-5xl mx-auto">
+                        <img src="logo.jpg" alt="Mom's Larder Logo" class="w-24 h-24 mx-auto mb-4 rounded-full">
                         <h2 class="text-2xl font-serif font-bold mb-6 text-center text-gray-800">Today's Menu</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             ${products.map(p => `
