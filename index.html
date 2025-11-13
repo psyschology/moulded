@@ -413,12 +413,12 @@
     <script>
         // --- Data & State ---
         const products = [
-            { id: 1, name: "Signature Truffle Cake", price: 1200, category: "cake", img: "https://source.unsplash.com/300x300/?chocolate,truffle,cake" },
-            { id: 2, name: "Fudgy Walnut Brownies", price: 650, category: "brownie", img: "https://source.unsplash.com/300x300/?walnut,brownies" },
-            { id: 3, name: "Blueberry Cheesecake", price: 1500, category: "cake", img: "https://source.unsplash.com/300x300/?blueberry,cheesecake" },
-            { id: 4, name: "Lemon Loaf (Tea Cake)", price: 450, category: "teacake", img: "https://source.unsplash.com/300x300/?lemon,loaf,cake" },
-            { id: 5, name: "Assorted Cupcakes (6)", price: 550, category: "cake", img: "https://source.unsplash.com/300x300/?assorted,cupcakes" },
-            { id: 6, name: "Sea Salt Cookies", price: 350, category: "cookie", img: "https://source.unsplash.com/300x300/?sea,salt,cookies" }
+            { id: 1, name: "Signature Truffle Cake", price: 1200, category: "cake", img: "truffle.jpg" },
+            { id: 2, name: "Fudgy Walnut Brownies", price: 650, category: "brownie", img: "brownies.jpg" },
+            { id: 3, name: "Blueberry Cheesecake", price: 1500, category: "cake", img: "cheesecake.jpg" },
+            { id: 4, name: "Lemon Loaf (Tea Cake)", price: 450, category: "teacake", img: "lemon loaf.jpg" },
+            { id: 5, name: "Assorted Cupcakes (6)", price: 550, category: "cake", img: "cupcake.png" },
+            { id: 6, name: "Sea Salt Cookies", price: 350, category: "cookie", img: "cookies.jpg" }
         ];
 
         const state = {
@@ -513,10 +513,10 @@
             let contentHTML = '';
 
             if (state.view === 'home') {
-                contentHTML = `
-                    <div class="relative h-64 bg-gray-100 flex items-center justify-center text-center px-4 bg-[url('https://placehold.co/1200x400/fce7f3/db2777?text=Baked+with+Love')] bg-cover bg-center">
-                        <div class="bg-white/90 p-6 rounded-xl backdrop-blur-sm shadow-lg">
-                            <h1 class="text-3xl font-serif font-bold text-gray-800 mb-2">Homemade Goodness</h1>
+            contentHTML = `
+                <div class="relative h-64 bg-gray-100 flex items-center justify-center text-center px-4 bg-[url('https://source.unsplash.com/1200x400/?baking,bakery,pastry')] bg-cover bg-center">
+                    <div class="bg-white/90 p-6 rounded-xl backdrop-blur-sm shadow-lg">
+                        <h1 class="text-3xl font-serif font-bold text-gray-800 mb-2">Homemade Goodness</h1>
                             <p class="text-gray-600 mb-4">Freshly baked, preservative free, delivered to your door.</p>
                             <button class="bg-pink-600 text-white px-6 py-2 rounded-full text-sm font-bold" onclick="document.getElementById('menu-grid').scrollIntoView({behavior: 'smooth'})">Order Now</button>
                         </div>
